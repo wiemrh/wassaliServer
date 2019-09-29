@@ -160,8 +160,8 @@ router.get('/logout',(req,res) => {
 
 });
 
-
-router.get('/getTalentById/:id', (req, res ) => {
+// get user by id
+router.get('/getUserById/:id', (req, res ) => {
    User.find( { _id: req.params.id },{_id:0,password:0},(err, docs) => {
         if (!err) { res.send(docs); }
         else { console.log('Erreur  :' + JSON.stringify(err, undefined, 2)); }
@@ -210,12 +210,6 @@ router.put('/updateTalentById/:id',(req, res) =>{
 })
 
 
-router.put('/desactiverTalent/:id', (req, res ) => {
-    User.updateOne({ _id: req.params.id },{$set: {"statut":"desactive"}} ,(err, docs) => {
-        if (!err) { res.send(docs); }
-        else { console.log('Error in Retriving Offre :' + JSON.stringify(err, undefined, 2)); }
-    });
-});
 
 
 router.get('/profile', passport.authenticate('jwt', {

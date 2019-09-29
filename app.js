@@ -46,9 +46,14 @@ app.use(checkUserType);
 
 const users = require('./controllers/User');
 const trajets = require('./controllers/Trajet');
+const annonces = require('./controllers/Annonce');
 
 app.use('/api/users', users);
 app.use('/api/trajets', trajets);
+app.use('/api/annonces', annonces);
+
+
+
 
 
 app.listen(PORT, () => {
