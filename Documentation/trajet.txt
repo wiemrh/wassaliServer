@@ -1,0 +1,40 @@
+Add new trajet
+http://localhost:3000/api/trajets
+{
+        "idUser":"12658hdsygds455d" ,
+        "adresseDepart": "MONASTIR",
+        "adresseArrive": "TUNIS",
+        "dateAller": "02/03/2020",
+        "dateRetour": "02/04/2020",
+        "description": "HERE IS UR DESCRIPTION",
+        "formatMaxDeColis": "L",
+        "moyenDeTransport" : "BUS"
+}
+----------------
+Get ALL trajets
+http://localhost:3000/api/trajets
+---------------
+Update
+http://localhost:3000/api/trajets/5d90b71c32b47a1f6c0559a2
+  {
+        "idUser": "25698",
+        "adresseDepart": "Paris",
+        "adresseArrive": "TUNIS",
+        "dateAller": "02/03/2020",
+        "dateRetour": "02/04/2020",
+        "description": "HERE IS UR DESCRIPTION",
+        "formatMaxDeColis": "L",
+        "moyenDeTransport": "Car"
+    }
+---------------------
+Get all trajet by id user
+http://localhost:3000/api/trajets/alltrajetUser/5d8f74511dbe26088c2cd89d
+--------------------
+  // GET Trajet By Id
+http://localhost:3000/api/trajets/5d90b71c32b47a1f6c0559a2
+-------------------
+Delete by id trajet
+http://localhost:3000/api/trajets/5d90b75332b47a1f6c0559a3
+
+
+
