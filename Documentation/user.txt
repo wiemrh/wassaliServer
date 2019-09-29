@@ -1,0 +1,13 @@
+http://localhost:3000/api/users/register
+
+{
+	            "nom": "wiem",  
+                "prenom": "rebah",
+                "dateDeNaissance": "21/02/1995",
+                "sexe": "femme",
+                "adresse": "rue carthage",
+                "telephone": 12365478,
+                "email": "wiwirh95@gmail.com",
+                "username": "wiemrh",
+                "password": "125666jouhbc"
+}
