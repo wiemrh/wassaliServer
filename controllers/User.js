@@ -12,10 +12,6 @@ app.use(session({secret: 'tsunamit',saveUninitialized: true,
 cookie:{maxAge:10},resave: true}));
 
 var sess;  
-
-
-
-
 router.post('/register', (req, res) => {
     let newUser = new User({
 
@@ -56,7 +52,7 @@ router.post('/register', (req, res) => {
               var mailOptions = {
                 from: 'tsunamiittest@gmail.com',
                 to: req.body.email,
-                subject: 'Tsunami IT: Mail De Bienvenue',
+                subject: 'Wasalli b tounsi : Mail De Bienvenue',
                 html: "<p> Bonjour   "+ (req.body.username) + ",<br> <p> Bienvenue chez notre plateforme Wasalli  <B> <br><p> Vos infomrations d'authentification sont : <br><p> Username :  " +" "+ req.body.username +"<br><p> Mot De Passe : "+" "+ req.body.password
               };
               transporter.sendMail(mailOptions, function (error, info) {
@@ -168,7 +164,7 @@ router.get('/getUserById/:id', (req, res ) => {
     });
 });
 
-router.get('/getAllTalents', ( req, res) => {
+router.get('/getAllUsers', ( req, res) => {
     User.find({},{password:0} ,(err, docs) => {
         if (!err) { res.send(docs); }
         else { console.log('Erreur :' + JSON.stringify(err, undefined, 2)); }
@@ -176,7 +172,7 @@ router.get('/getAllTalents', ( req, res) => {
 });
 
 
-router.put('/updateTalentById/:id',(req, res) =>{
+router.put('/updateUserById/:id',(req, res) =>{
     let _id = req.params.id;
  
     User.findById(_id)
@@ -201,7 +197,7 @@ router.put('/updateTalentById/:id',(req, res) =>{
 
             user.save()
                 .then(post => {
-                    res.send({message: 'Talent a été  modifié avec succés ', satus:'success',user: user})
+                    res.send({message: 'User a été  modifié avec succés ', satus:'success',user: user})
                 })
                 .catch(err => console.log(err))
         }) 

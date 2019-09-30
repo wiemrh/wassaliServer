@@ -7,7 +7,7 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 const session = require('express-session');
  
- 
+
 var sess; 
 const config = require('./config/db');
 mongoose.set('useCreateIndex', true);
@@ -33,10 +33,9 @@ mongoose.connect(config.db, {
     mongoose.Promise = global.Promise;
 
 
-
-
     const checkUserType = function (req, res, next) {
     const userType = req.originalUrl.split('/')[2];
+
 
     require('./config/passport')(userType, passport);
     next();
@@ -47,10 +46,13 @@ app.use(checkUserType);
 const users = require('./controllers/User');
 const trajets = require('./controllers/Trajet');
 const annonces = require('./controllers/Annonce');
+const reviews = require('./controllers/Reviews');
+
 
 app.use('/api/users', users);
 app.use('/api/trajets', trajets);
 app.use('/api/annonces', annonces);
+app.use('/api/reviews', reviews);
 
 
 

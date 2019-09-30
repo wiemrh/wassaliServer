@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const talentSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
   
     nom: {
         type: String,
@@ -58,21 +58,21 @@ const talentSchema = mongoose.Schema({
 
 });
 
-talentSchema.plugin(uniqueValidator);
+userSchema.plugin(uniqueValidator);
 
-const Talent = module.exports = mongoose.model('user', talentSchema);
+const User = module.exports = mongoose.model('user', userSchema);
 
-talentSchema.pre("save", function(next) {
-        var talent = this
+userSchema.pre("save", function(next) {
+        var user = this
     
-        if (!talent.isModified('password')) return callback()
+        if (!user.isModified('password')) return callback()
         bcrypt.genSalt(10, function(err, salt) {
           if (err) return next(err)
-          bcrypt.hash(talent.password, salt, function(err, hash) {
+          bcrypt.hash(user.password, salt, function(err, hash) {
             if (err) return next(err)
-            talent.password = hash 
+            user.password = hash 
               const currentDate = new Date
-              talent.updated_at = currentDate
+              user.updated_at = currentDate
               next()
           })
         }) 
@@ -80,7 +80,7 @@ talentSchema.pre("save", function(next) {
       })
 
 
-talentSchema.path('email').validate((val) => {
+      userSchema.path('email').validate((val) => {
         emailRegex =
          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return emailRegex.test(val);
@@ -98,17 +98,17 @@ module.exports.addTalent = function (newUser, callback) {
     });
 }
 
-// Find the talent by ID
+// Find the User by ID
 module.exports.getTalentById = function (id, callback) {
-    Talent.findById(id, callback);
+    User.findById(id, callback);
 }
 
-// Find the talent by Its username
+// Find the User by Its username
 module.exports.getTalentByUsername = function (username, callback) {
     const query = {
         username: username
     }
-    Talent.findOne(query, callback);
+    User.findOne(query, callback);
 }
  
 // Compare Password

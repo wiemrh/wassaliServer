@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var { Annonce } = require('./Annonce');
-
+var moment = require('moment');
 var Annonce = mongoose.model('Annonce', {
 
 idUser: {
@@ -32,6 +32,10 @@ adresseArrive: {
 
 description: {
       type: String,
+    },
+    dateDe: {
+        type: String ,
+        default: moment().format('llll') 
     }
 
 });

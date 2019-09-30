@@ -1,3 +1,4 @@
+//Register
 http://localhost:3000/api/users/register
 
 {
@@ -11,3 +12,12 @@ http://localhost:3000/api/users/register
                 "username": "wiemrh",
                 "password": "125666jouhbc"
 }
+//login
+http://localhost:3000/api/users/login
+username 
+password
+
+//get user by is
+http://localhost:3000/api/users/getUserById/:id'
+
+

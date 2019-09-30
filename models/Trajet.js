@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var { Trajet } = require('./Trajet');
-
+var moment = require('moment');
 var Trajet = mongoose.model('Trajet', {
 
 idUser: {
@@ -30,6 +30,10 @@ formatMaxDeColis:{
 },
 moyenDeTransport:{
     type: String
+},
+dateDe: {
+    type: String ,
+    default: moment().format('llll') 
 }
 
 });
