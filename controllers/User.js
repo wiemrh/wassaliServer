@@ -222,40 +222,64 @@ router.get('/getAllUsers', ( req, res) => {
 });
 
 
-router.put('/updateUserById/:id',(req, res) =>{
-    let _id = req.params.id;
+
+router.put(
+  "/:id",
+  multer({ storage: storage }).single("imageUser"),
+  async function(req, res, next) {
+    
+   var oldimageUser = new User ();
+  
+   oldimageUser =  await User.findById({_id:req.params.id}).exec();
+
+  
+  var str = oldimageUser["imageUser"];
+  var nom = str.substring(36,str.lenght);
+  var str2  = str.replace("http://localhost:3000",".");
+  console.log("str2:  " , str2) ;
+
+    fs.unlink(str2, (err) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+    });
+   
+let imageUser = req.body.imageUser;
+    if (req.file) {
+      const url = req.protocol + "://" + req.get("host");
+      imageUser = url + "/imageWasalli/" + nom
+    }
  
-    User.findById(_id)
-        .then(user => {
+    fs.rename('./imageWasalli/'+req.file.filename, './imageWasalli/'+nom, (err) => {
 
-            user.nom =req.body.nom;
-            user.prenom = req.body.prenom;
-            user.dateDeNaissance = req.body.dateDeNaissance;
-            user.sexe = req.body.sexe;
-            user.adresse = req.body.adresse;
-            user.telephone = req.body.telephone;
-            user.email = req.body.email;
-            user.username = req.body.username;
-            user.password = req.body.password;
-            user.createdAt = req.body.createdAt;
-            user.statut = req.body.statut;
-            user.etape = req.body.etape;
-            user.presentation = req.body.presentation;
-            user.remarque = req.body.remarque;
-            user.profession = req.body.profession;
-            user.domaine = req.body.domaine;
-
-            user.save()
-                .then(post => {
-                    res.send({message: 'User a été  modifié avec succés ', satus:'success',user: user})
-                })
-                .catch(err => console.log(err))
-        }) 
-        .catch(err => console.log(err))
- 
-})
+      if (err) throw err;
+    
+      //console.log('Rename complete!');
+    
+    });
 
 
+    const user = new User({
+                _id: req.params.id,
+                 nom: req.body.nom,  
+                prenom: req.body.prenom,
+                dateDeNaissance: req.body.dateDeNaissance,
+                sexe: req.body.sexe,
+                adresse: req.body.adresse,
+                telephone: req.body.telephone,
+                email: req.body.email,
+                username: req.body.username,
+                password: req.body.password,
+                imageUser: imageUser 
+  
+    });
+    //console.log(cheque);
+    User.updateOne({ _id : req.params.id }, user ).then(result => {
+      res.status(200).json({ message: "Mis à jour avec succés !" });
+    });
+  }
+);
 
 
 router.get('/profile', passport.authenticate('jwt', {
