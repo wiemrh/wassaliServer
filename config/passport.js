@@ -11,7 +11,7 @@ module.exports = (userType, passport) => {
     passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
       
         if (userType == 'users') {
-            User.getTalentById(jwt_payload.data._id, (err, user) => {
+            User.getUserById(jwt_payload.data._id, (err, user) => {
                 if (err) return done(err, false);
                 if (user) {
                     return done(null, user);

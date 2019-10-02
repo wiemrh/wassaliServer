@@ -92,7 +92,7 @@ userSchema.pre("save", function(next) {
 
 
     // to Register the talent
-module.exports.addTalent = function (newUser, callback) {
+module.exports.addUser = function (newUser, callback) {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
@@ -103,12 +103,12 @@ module.exports.addTalent = function (newUser, callback) {
 }
 
 // Find the User by ID
-module.exports.getTalentById = function (id, callback) {
+module.exports.getUserById = function (id, callback) {
     User.findById(id, callback);
 }
 
 // Find the User by Its username
-module.exports.getTalentByUsername = function (username, callback) {
+module.exports.geUserByUsername = function (username, callback) {
     const query = {
         username: username
     }

@@ -14,8 +14,6 @@ app.use(session({secret: 'tsunamit',saveUninitialized: true,
 cookie:{maxAge:10},resave: true}));
 
 var sess;  
-
-
 const MIME_TYPE_MAP = {
     "image/png": "png",
     "image/jpeg": "jpeg",
@@ -77,7 +75,7 @@ const url = req.protocol + "://" + req.get("host");
               
             });
 
-            User.addTalent(newUser, (err, user) => {
+            User.addUser(newUser, (err, user) => {
         if (err) {
             let message = "";
             if (err.errors.username) message = "Username is already taken. ";
@@ -103,7 +101,7 @@ const url = req.protocol + "://" + req.get("host");
                 from: 'tsunamiittest@gmail.com',
                 to: req.body.email,
                 subject: 'Wasalli b tounsi : Mail De Bienvenue',
-                html: "<p> Bonjour   "+ (req.body.username) + ",<br> <p> Bienvenue chez notre plateforme Wasalli  <B> <br><p> Vos infomrations d'authentification sont : <br><p> Username :  " +" "+ req.body.username +"<br><p> Mot De Passe : "+" "+ req.body.password
+                html: "<p> Salut   "+ (req.body.username) + ",<br> <p> Bienvenue chez notre plateforme Wasalli  <B> <br><p> Vos infomrations d'authentification sont : <br><p> Username :  " +" "+ req.body.username +"<br><p> Mot De Passe : "+" "+ req.body.password
               };
               transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
@@ -128,7 +126,7 @@ router.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    User.getTalentByUsername(username, (err, user
+    User.geUserByUsername(username, (err, user
         ) => {
         if (err) throw err;
       
