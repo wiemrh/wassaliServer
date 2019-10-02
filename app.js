@@ -48,6 +48,9 @@ const trajets = require('./controllers/Trajet');
 const annonces = require('./controllers/Annonce');
 const reviews = require('./controllers/Reviews');
 
+app.use("/imageWasalli", express.static("imageWasalli"));
+
+
 
 app.use('/api/users', users);
 app.use('/api/trajets', trajets);

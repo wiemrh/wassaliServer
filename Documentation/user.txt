@@ -10,14 +10,16 @@ http://localhost:3000/api/users/register
                 "telephone": 12365478,
                 "email": "wiwirh95@gmail.com",
                 "username": "wiemrh",
-                "password": "125666jouhbc"
+ 
+               "password": "125666jouhbc"
+               imageUser
 }
 //login
 http://localhost:3000/api/users/login
 username 
 password
 
-//get user by is
+//get user by id
 http://localhost:3000/api/users/getUserById/:id'
 
 

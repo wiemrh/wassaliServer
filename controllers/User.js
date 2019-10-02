@@ -7,12 +7,61 @@ const config = require('../config/db');
 const session = require('express-session');
 const nodemailer = require('nodemailer');
 
+const multer = require("multer");
+var fs = require('fs');
 const app = express();
 app.use(session({secret: 'tsunamit',saveUninitialized: true,
 cookie:{maxAge:10},resave: true}));
 
 var sess;  
-router.post('/register', (req, res) => {
+
+
+const MIME_TYPE_MAP = {
+    "image/png": "png",
+    "image/jpeg": "jpeg",
+    "image/jpg": "jpg"
+  };
+   
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      const isValid = MIME_TYPE_MAP[file.mimetype];
+      let error = new Error("Extension de l\'image est Invalide");
+      if (isValid) {
+        error = null;
+      }
+      cb(error, "./imageWasalli/");
+    },
+   filename: (req,file, cb) => {
+      const name = file.originalname
+        .toLowerCase()
+        .split(" ")
+        .join("-");
+      const ext = MIME_TYPE_MAP[file.mimetype];
+   
+      cb(null, name  );
+    }
+  }); 
+
+
+router.post('/register', multer({ storage: storage , 
+    limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  }).single("imageUser"), async function(req, res) {
+
+ 
+  
+const url = req.protocol + "://" + req.get("host"); 
+  var extt = req.file.mimetype ; 
+  const ext = MIME_TYPE_MAP[extt];
+  var nom = 'image'+ Date.now()  +'.' + ext;
+   fs.rename('./imageWasalli/'+req.file.filename, './imageWasalli/'+nom, (err) => {
+  
+    if (err) throw err;
+  
+    console.log('Rename complete!');
+  
+  });
     let newUser = new User({
 
                 nom: req.body.nom,  
@@ -24,6 +73,7 @@ router.post('/register', (req, res) => {
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password,
+                imageUser: url + "/imageWasalli/" + nom ,
               
             });
 
