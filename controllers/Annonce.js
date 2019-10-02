@@ -1,13 +1,62 @@
 const express = require('express');
 var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
-
 var { Annonce } = require('../models/Annonce');
+const multer = require("multer");
+var fs = require('fs');
 
-//post
-router.post('/', (req, res) => {
-    
-    var annonce = new Annonce({
+
+
+const MIME_TYPE_MAP = {
+  "image/png": "png",
+  "image/jpeg": "jpeg",
+  "image/jpg": "jpg"
+};
+ 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const isValid = MIME_TYPE_MAP[file.mimetype];
+    let error = new Error("Extension de l\'image est Invalide");
+    if (isValid) {
+      error = null;
+    }
+    cb(error, "./imageWasalli/");
+  },
+ filename: (req,file, cb) => {
+    const name = file.originalname
+      .toLowerCase()
+      .split(" ")
+      .join("-");
+    const ext = MIME_TYPE_MAP[file.mimetype];
+ 
+    cb(null, name  );
+  }
+}); 
+
+
+
+
+router.post('/', multer({ storage: storage , 
+    limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  }).single("imageAnnnonce"), async function(req, res) {
+
+ 
+  
+const url = req.protocol + "://" + req.get("host"); 
+  var extt = req.file.mimetype ; 
+  const ext = MIME_TYPE_MAP[extt];
+  var nom = 'image'+ Date.now()  +'.' + ext;
+   fs.rename('./imageWasalli/'+req.file.filename, './imageWasalli/'+nom, (err) => {
+  
+    if (err) throw err;
+  
+    console.log('Rename complete!');
+  
+  });
+
+      var annonce = new Annonce({
 
 
     idUser: req.body.idUser ,
@@ -16,15 +65,22 @@ router.post('/', (req, res) => {
     adresseDepart: req.body.adresseDepart ,
     dateLimite: req.body.dateLimite ,
     adresseArrive: req.body.adresseArrive ,
-    description: req.body.description 
+    description: req.body.description ,
+    imageAnnnonce : url + "/imageWasalli/" + nom 
 
        
     });
+
+
     annonce.save((err, doc) => {
         if (!err) { res.send(doc); }
         else { console.log('Error in annonce Save :' + JSON.stringify(err, undefined, 2)); }
     });
 });
+
+
+
+
 
 //get all
 router.get('/', (eq, res) => {
@@ -35,10 +91,39 @@ router.get('/', (eq, res) => {
 });
 
 //update
-router.put('/:id', (req, res) => {
-    if (!ObjectId.isValid(req.params.id))
-        return res.status(400).send(`No record with given id : ${req.params.id}`);
+router.put('/:id',
+multer({ storage: storage }).single("imageAnnnonce"),
+async function(req, res, next) {
+  
+ var oldimageAnnonce = new Annonce ();
+ oldimageAnnonce =  await Annonce.findById({_id:req.params.id}).exec();
 
+
+var str = oldimageAnnonce["imageAnnnonce"];
+var nom = str.substring(35,str.lenght);
+var str2  = str.replace("http://localhost:3000",".");
+console.log("str2:  " , str2) ;
+
+  fs.unlink(str2, (err) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+  });
+ 
+let imageAnnnonce = req.body.imageAnnnonce;
+  if (req.file) {
+    const url = req.protocol + "://" + req.get("host");
+    imageAnnnonce = url + "/imageWasalli/" + nom
+  }
+
+  fs.rename('./imageWasalli/'+req.file.filename, './imageWasalli/'+nom, (err) => {
+
+    if (err) throw err;
+  
+    //console.log('Rename complete!');
+  
+  });
     var annonce = {
       idUser: req.body.idUser ,
       type:  req.body.type ,
@@ -46,11 +131,13 @@ router.put('/:id', (req, res) => {
       adresseDepart: req.body.adresseDepart ,
       dateLimite: req.body.dateLimite ,
       adresseArrive: req.body.adresseArrive ,
-      description: req.body.description        
+      description: req.body.description  ,
+      imageAnnnonce: imageAnnnonce       
     };
     Annonce.findByIdAndUpdate(req.params.id, { $set: annonce }, { new: true }, (err, doc) => {
         if (!err) { res.send(doc); }
-        else { console.log('Error in annonce Update :' + JSON.stringify(err, undefined, 2)); }
+        else { 
+          console.log('Error in annonce Update :' + JSON.stringify(err, undefined, 2)); }
     });
 });
 

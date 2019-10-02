@@ -33,10 +33,14 @@ adresseArrive: {
 description: {
       type: String,
     },
-    dateDe: {
+ dateDe: {
         type: String ,
         default: moment().format('llll') 
-    }
+    },
+    imageAnnnonce: {
+        type: String,
+     
+    },
 
 });
 

@@ -274,7 +274,7 @@ let imageUser = req.body.imageUser;
                 imageUser: imageUser 
   
     });
-    //console.log(cheque);
+  
     User.updateOne({ _id : req.params.id }, user ).then(result => {
       res.status(200).json({ message: "Mis à jour avec succés !" });
     });
