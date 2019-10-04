@@ -40,6 +40,7 @@ const MIME_TYPE_MAP = {
     }
   }); 
 
+//tested perfectlyy 
 
 router.post('/register', multer({ storage: storage , 
     limits: {
@@ -123,6 +124,7 @@ const url = req.protocol + "://" + req.get("host");
 });
 
 router.post('/login', (req, res) => {
+  
     const username = req.body.username;
     const password = req.body.password;
 
@@ -143,24 +145,19 @@ router.post('/login', (req, res) => {
             if (isMatch) { 
                 const userID=user._id
                 const token = jwt.sign({
-                    type: "talent",
+                  
                     data: {
-                                                _id: user._id,
-                                                nom: user.nom,
-                                                prenom: user.prenom,
-                                                dateDeNaissance: user.dateDeNaissance,
-                                                sexe: user.sexe,
-                                                adresse: user.adresse,
-                                                telephone: user.telephone, 
-                                                email: user.email,
-                                                username: user.username,
-                                                createdAt: user.createdAt,
-                                                statut: user.statut,
-                                                etape: user.etape,
-                                                presentation: user.presentation,
-                                                remarque: user.remarque,
-                                                profession: user.profession,
-                                                domaine: user.domaine
+                      _id: user._id,
+                      nom: user.nom, 
+                      prenom: user.prenom,
+                      dateDeNaissance: user.dateDeNaissance,
+                      sexe: user.sexe,
+                      adresse: user.adresse,
+                      telephone: user.telephone,
+                      email: user.email,
+                      username: user.username,
+                      password: user.password,
+                      imageUser: user.imageUser,
                     }
                 }, config.secret, {
                     expiresIn: 604800 // le token exipre aprés une semaine 
@@ -212,17 +209,11 @@ router.get('/getUserById/:id', (req, res ) => {
     });
 });
 
-router.get('/getAllUsers', ( req, res) => {
-    User.find({},{password:0} ,(err, docs) => {
-        if (!err) { res.send(docs); }
-        else { console.log('Erreur :' + JSON.stringify(err, undefined, 2)); }
-    });
-});
 
 
 
 router.put(
-  "/:id",
+  "updateUserInfo/:id",
   multer({ storage: storage }).single("imageUser"),
   async function(req, res, next) {
     
@@ -280,14 +271,13 @@ let imageUser = req.body.imageUser;
 );
 
 
-router.get('/profile', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
-    // console.log(req.user);
-    return res.json(
-        req.user
-    );
-});
+  // DELETE User By Id
+  router.delete("/:id", (req, res, next) => {
+    User.deleteOne({ _id: req.params.id }).then(result => {
+   //   console.log(result);
+      res.status(200).json({ message: "User a été supprimé avec succés!" });
+    });
+  });
 
 module.exports = router;
 

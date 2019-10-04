@@ -1,0 +1,40 @@
+Add new Annonce
+http://localhost:3000/api/annonces
+{
+    idUser: "",
+    type: "",
+    taille: "",
+    adresseDepart:  "",
+    dateLimite: "",
+    adresseArrive: "",
+    description: "",
+    imageAnnnonce :  "",
+}
+----------------
+Get ALL trajets
+http://localhost:3000/api/annonces
+---------------
+Update
+http://localhost:3000/api/annonces/:idAnnonce
+  {
+    idUser: "",
+    type: "",
+    taille: "",
+    adresseDepart:  "",
+    dateLimite: "",
+    adresseArrive: "",
+    description: "",
+    imageAnnnonce :  "",
+    }
+---------------------
+Get all annonce by id user
+http://localhost:3000/api/annonces/allAnnonceUser/:idUser
+--------------------
+  // GET annonce By Id
+http://localhost:3000/api/annonces/:idAnnonce
+-------------------
+Delete by id annonce
+http://localhost:3000/api/annonces/:idAnnonce
+
+
+

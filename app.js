@@ -33,15 +33,9 @@ mongoose.connect(config.db, {
     mongoose.Promise = global.Promise;
 
 
-    const checkUserType = function (req, res, next) {
-    const userType = req.originalUrl.split('/')[2];
 
-
-    require('./config/passport')(userType, passport);
-    next();
-};
  
-app.use(checkUserType); 
+
 
 const users = require('./controllers/User');
 const trajets = require('./controllers/Trajet');

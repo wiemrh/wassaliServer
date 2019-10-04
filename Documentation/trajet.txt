@@ -15,7 +15,7 @@ Get ALL trajets
 http://localhost:3000/api/trajets
 ---------------
 Update
-http://localhost:3000/api/trajets/5d90b71c32b47a1f6c0559a2
+http://localhost:3000/api/trajets/:idTrajet
   {
         "idUser": "25698",
         "adresseDepart": "Paris",
@@ -28,13 +28,13 @@ http://localhost:3000/api/trajets/5d90b71c32b47a1f6c0559a2
     }
 ---------------------
 Get all trajet by id user
-http://localhost:3000/api/trajets/alltrajetUser/5d8f74511dbe26088c2cd89d
+http://localhost:3000/api/trajets/alltrajetUser/:idUser
 --------------------
   // GET Trajet By Id
-http://localhost:3000/api/trajets/5d90b71c32b47a1f6c0559a2
+http://localhost:3000/api/trajets/:idTrajet
 -------------------
 Delete by id trajet
-http://localhost:3000/api/trajets/5d90b75332b47a1f6c0559a3
+http://localhost:3000/api/trajets/:idTrajet
 
 
 

@@ -10,16 +10,32 @@ http://localhost:3000/api/users/register
                 "telephone": 12365478,
                 "email": "wiwirh95@gmail.com",
                 "username": "wiemrh",
- 
-               "password": "125666jouhbc"
-               imageUser
+               "password": "125666jouhbc",
+               "imageUser": url image
 }
 //login
 http://localhost:3000/api/users/login
-username 
-password
+"username" :
+"password":
 
 //get user by id
-http://localhost:3000/api/users/getUserById/:id'
+http://localhost:3000/api/users/getUserById/:id
 
+//Update user info
+http://localhost:3000/api/users/updateUserInfo/:id
 
+{
+	            "nom": "wiem",  
+                "prenom": "rebah",
+                "dateDeNaissance": "21/02/1995",
+                "sexe": "femme",
+                "adresse": "rue carthage",
+                "telephone": 12365478,
+                "email": "wiwirh95@gmail.com",
+                "username": "wiemrh",
+               "password": "125666jouhbc",
+               "imageUser": url image
+}
+//Delete user by id
+http://localhost:3000/api/users/5d8f74511dbe26088c2cd89d
+   
