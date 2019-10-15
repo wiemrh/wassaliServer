@@ -14,6 +14,7 @@ http://localhost:3000/api/users/register
                "imageUser": url image
 }
 //login
+http://localhost:3000/api/users/login?username=wiem&password=123456789
 http://localhost:3000/api/users/login
 "username" :
 "password":

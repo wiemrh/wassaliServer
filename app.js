@@ -22,8 +22,12 @@ mongoose.connect(config.db, {
     });
 
     const app = express();
-    
-    app.use(cors({origin: 'http://localhost:4200'})); 
+ //    app.use(cors({origin: 'http://localhost:4200'})); 
+ app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
     app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(bodyParser.json());

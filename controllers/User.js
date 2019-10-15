@@ -123,10 +123,11 @@ const url = req.protocol + "://" + req.get("host");
     });
 });
 
-router.post('/login', (req, res) => {
+router.get('/login', (req, res) => {
   
-    const username = req.body.username;
-    const password = req.body.password;
+    const username = req.query.username;
+    const password = req.query.password;
+    console.log(username);
 
     User.geUserByUsername(username, (err, user
         ) => {
