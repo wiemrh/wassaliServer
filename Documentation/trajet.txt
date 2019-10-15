@@ -35,6 +35,8 @@ http://localhost:3000/api/trajets/:idTrajet
 -------------------
 Delete by id trajet
 http://localhost:3000/api/trajets/:idTrajet
+queryy
+http://localhost:3000/api/trajets?idUser=5d915b59d7e52e24a06f8f75&adresseDepart=TUNIS&adresseArrive=CHARGUIA2&dateAller=Tue, Oct 16, 2019 10:56 AM&dateRetour=Tue, Oct 16, 2019 10:56 PM&description=HERE IS A DESCRIPTION&formatMaxDeColis=XL&moyenDeTransport=Car
 
 
 

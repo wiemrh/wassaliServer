@@ -5,18 +5,19 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var { Trajet } = require('../models/Trajet');
 
 //post
-router.post('/', (req, res) => {
+router.post('', (req, res) => {
     
     var trajet = new Trajet({
+     
+        idUser: req.query.idUser ,
+        adresseDepart: req.query.adresseDepart,
+        adresseArrive: req.query.adresseArrive,
+        dateAller: req.query.dateAller,
+        dateRetour: req.query.dateRetour,
+        description: req.query.description,
+        formatMaxDeColis: req.query.formatMaxDeColis,
+        moyenDeTransport : req.query.moyenDeTransport
 
-        idUser: req.body.idUser ,
-        adresseDepart: req.body.adresseDepart,
-        adresseArrive: req.body.adresseArrive,
-        dateAller: req.body.dateAller,
-        dateRetour: req.body.dateRetour,
-        description: req.body.description,
-        formatMaxDeColis: req.body.formatMaxDeColis,
-        moyenDeTransport : req.body.moyenDeTransport
        
     });
     trajet.save((err, doc) => {
