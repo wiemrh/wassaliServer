@@ -1,5 +1,6 @@
 //Register
-http://localhost:3000/api/users/register
+http://localhost:3000/api/users/register?nom=wiem&prenom=123456789&dateDeNaissance=123456789&sexe=123456789&adresse=123456789
+&telephone=123456789&email=123456789&username=123456789&password=123456789&imageUser=123456789
 
 {
 	            "nom": "wiem",  

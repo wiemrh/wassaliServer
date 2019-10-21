@@ -5,6 +5,7 @@ var Annonce = mongoose.model('Annonce', {
 
 idUser: {
     type: String,
+    required: true
   }, 
 
 type: {
@@ -36,11 +37,11 @@ description: {
  dateDe: {
         type: String ,
         default: moment().format('llll') 
-    },
-    imageAnnnonce: {
-        type: String,
+    }
+    // imageAnnnonce: {
+    //     type: String,
      
-    },
+    // },
 
 });
 

@@ -33,48 +33,56 @@ const storage = multer.diskStorage({
   }
 }); 
 
+//http://localhost:3000/api/annonces?idUser=wiem&type=vetement&taille=L&adresseDepart=monastir&dateLimite=22/10/2019&adresseArrive=Tunis&description=this is a description
 
-
-
-router.post('/', multer({ storage: storage , 
-    limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  }).single("imageAnnnonce"), async function(req, res) {
+router.post('',  async function(req, res) {
 
  
   
-const url = req.protocol + "://" + req.get("host"); 
-  var extt = req.file.mimetype ; 
-  const ext = MIME_TYPE_MAP[extt];
-  var nom = 'image'+ Date.now()  +'.' + ext;
-   fs.rename('./imageWasalli/'+req.file.filename, './imageWasalli/'+nom, (err) => {
+// const url = req.protocol + "://" + req.get("host"); 
+//   var extt = req.file.mimetype ; 
+//   const ext = MIME_TYPE_MAP[extt];
+//   var nom = 'image'+ Date.now()  +'.' + ext;
+//    fs.rename('./imageWasalli/'+req.file.filename, './imageWasalli/'+nom, (err) => {
   
-    if (err) throw err;
+//     if (err) throw err;
   
-    console.log('Rename complete!');
+//     console.log('Rename complete!');
   
-  });
+//   });
 
       var annonce = new Annonce({
 
 
-    idUser: req.body.idUser ,
-    type:  req.body.type ,
-    taille: req.body.taille ,
-    adresseDepart: req.body.adresseDepart ,
-    dateLimite: req.body.dateLimite ,
-    adresseArrive: req.body.adresseArrive ,
-    description: req.body.description ,
-    imageAnnnonce : url + "/imageWasalli/" + nom 
+    idUser: req.query.idUser ,
+    type:  req.query.type ,
+    taille: req.query.taille ,
+    adresseDepart: req.query.adresseDepart ,
+    dateLimite: req.query.dateLimite ,
+    adresseArrive: req.query.adresseArrive ,
+    description: req.query.description 
+   // imageAnnnonce : url + "/imageWasalli/" + nom 
 
        
     });
 
 
     annonce.save((err, doc) => {
-        if (!err) { res.send(doc); }
-        else { console.log('Error in annonce Save :' + JSON.stringify(err, undefined, 2)); }
+        if (!err) {
+          // res.send(doc);
+          return res.json({
+            success: true,
+            message: "Colis registration is successful."
+        });
+        
+        }
+        else { 
+          return res.json({
+            success: false,
+            message: "Colis registration is failed."
+        });
+
+           }
     });
 });
 

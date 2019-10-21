@@ -42,39 +42,36 @@ const MIME_TYPE_MAP = {
 
 //tested perfectlyy 
 
-router.post('/register', multer({ storage: storage , 
-    limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  }).single("imageUser"), async function(req, res) {
+router.post('/register',  async function(req, res) {
 
  
   
-const url = req.protocol + "://" + req.get("host"); 
-  var extt = req.file.mimetype ; 
-  const ext = MIME_TYPE_MAP[extt];
-  var nom = 'image'+ Date.now()  +'.' + ext;
-   fs.rename('./imageWasalli/'+req.file.filename, './imageWasalli/'+nom, (err) => {
+// const url = req.protocol + "://" + req.get("host"); 
+//   var extt = req.file.mimetype ; 
+//   const ext = MIME_TYPE_MAP[extt];
+//   var nom = 'image'+ Date.now()  +'.' + ext;
+//    fs.rename('./imageWasalli/'+req.file.filename, './imageWasalli/'+nom, (err) => {
   
-    if (err) throw err;
+//     if (err) throw err;
   
-    console.log('Rename complete!');
+//     console.log('Rename complete!');
   
-  });
+//   });
     let newUser = new User({
 
-                nom: req.body.nom,  
-                prenom: req.body.prenom,
-                dateDeNaissance: req.body.dateDeNaissance,
-                sexe: req.body.sexe,
-                adresse: req.body.adresse,
-                telephone: req.body.telephone,
-                email: req.body.email,
-                username: req.body.username,
-                password: req.body.password,
-                imageUser: url + "/imageWasalli/" + nom ,
+                nom: req.query.nom,  
+                prenom: req.query.prenom,
+                dateDeNaissance: req.query.dateDeNaissance,
+                sexe: req.query.sexe,
+                adresse: req.query.adresse,
+                telephone: req.query.telephone,
+                email: req.query.email,
+                username: req.query.username,
+                password: req.query.password
+             //   imageUser: url + "/imageWasalli/" + nom ,
               
             });
+         //   console.log(req.file.filename);
 
             User.addUser(newUser, (err, user) => {
         if (err) {
@@ -97,10 +94,10 @@ const url = req.protocol + "://" + req.get("host");
     tls: {
         rejectUnauthorized: false
     }
-              });
+             });
               var mailOptions = {
                 from: 'tsunamiittest@gmail.com',
-                to: req.body.email,
+                to: req.query.email,
                 subject: 'Wasalli b tounsi : Mail De Bienvenue',
                 html: "<p> Salut   "+ (req.body.username) + ",<br> <p> Bienvenue chez notre plateforme Wasalli  <B> <br><p> Vos infomrations d'authentification sont : <br><p> Username :  " +" "+ req.body.username +"<br><p> Mot De Passe : "+" "+ req.body.password
               };
@@ -128,6 +125,7 @@ router.get('/login', (req, res) => {
     const username = req.query.username;
     const password = req.query.password;
     console.log(username);
+    console.log(password);
 
     User.geUserByUsername(username, (err, user
         ) => {
