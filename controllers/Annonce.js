@@ -60,7 +60,8 @@ router.post('',  async function(req, res) {
     adresseDepart: req.query.adresseDepart ,
     dateLimite: req.query.dateLimite ,
     adresseArrive: req.query.adresseArrive ,
-    description: req.query.description 
+    description: req.query.description ,
+    sortedDate : req.query.dateLimite
    // imageAnnnonce : url + "/imageWasalli/" + nom 
 
        
@@ -91,12 +92,19 @@ router.post('',  async function(req, res) {
 
 
 //get all
-router.get('/', (eq, res) => {
-    Annonce.find((err, docs) => {
-        if (!err) { res.send(docs); }
-        else { console.log('Error in Retriving annonce :' + JSON.stringify(err, undefined, 2)); }
+
+router.get('/', (req, res, next) => {
+
+  Annonce.find().sort({'sortedDate': -1}).then(docs => {
+    res.status(200).json({
+      message: " Trajet fetched successfully!",
+      Annonce: docs
     });
+  });
 });
+
+
+
 
 //update
 router.put('/:id',

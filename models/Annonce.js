@@ -42,6 +42,10 @@ description: {
     //     type: String,
      
     // },
+    ,
+  sortedDate: {
+    type: Date
+  }
 
 });
 

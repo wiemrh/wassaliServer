@@ -99,7 +99,7 @@ router.post('/register',  async function(req, res) {
                 from: 'tsunamiittest@gmail.com',
                 to: req.query.email,
                 subject: 'Wasalli b tounsi : Mail De Bienvenue',
-                html: "<p> Salut   "+ (req.body.username) + ",<br> <p> Bienvenue chez notre plateforme Wasalli  <B> <br><p> Vos infomrations d'authentification sont : <br><p> Username :  " +" "+ req.body.username +"<br><p> Mot De Passe : "+" "+ req.body.password
+                html: "<p> Salut   "+ (req.query.username) + ",<br> <p> Bienvenue chez notre plateforme Wasalli  <B> <br><p> Vos infomrations d'authentification sont : <br><p> Username :  " +" "+ req.query.username +"<br><p> Mot De Passe : "+" "+ req.query.password
               };
               transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {

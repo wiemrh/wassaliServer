@@ -34,6 +34,9 @@ moyenDeTransport:{
 dateDe: {
     type: String ,
     default: moment().format('llll') 
+},
+sortedDate: {
+  type: Date
 }
 
 });

@@ -16,7 +16,8 @@ router.post('', (req, res) => {
         dateRetour: req.query.dateRetour,
         description: req.query.description,
         formatMaxDeColis: req.query.formatMaxDeColis,
-        moyenDeTransport : req.query.moyenDeTransport
+        moyenDeTransport : req.query.moyenDeTransport,
+        sortedDate : req.query.adresseDepart
 
        
     });
@@ -27,12 +28,31 @@ router.post('', (req, res) => {
 });
 
 //get all
-router.get('/', (eq, res) => {
-    Trajet.find((err, docs) => {
-        if (!err) { res.send(docs); }
-        else { console.log('Error in Retriving trajet :' + JSON.stringify(err, undefined, 2)); }
+// router.get('/', (eq, res) => {
+//     Trajet.find((err, docs) => {
+//         if (!err) { res.send(docs); }
+//         else { console.log('Error in Retriving trajet :' + JSON.stringify(err, undefined, 2)); }
+//     });
+// });
+
+//get all
+
+router.get('/', (req, res, next) => {
+
+  Trajet.find().sort({'sortedDate': -1}).then( docs => {
+    res.status(200).json({
+      message: " Trajet fetched successfully!",
+      Trajet: docs
     });
+  });
 });
+
+
+
+
+
+
+
 
 //update
 router.put('/:id', (req, res) => {
