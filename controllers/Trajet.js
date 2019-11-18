@@ -39,7 +39,7 @@ router.post('', (req, res) => {
 
 router.get('/', (req, res, next) => {
 
-  Trajet.find().sort({'sortedDate': -1}).then( docs => {
+  Trajet.find({sortedDate:{ $gte: new Date()}}).sort({'sortedDate': -1}).then( docs => {
     res.status(200).json({
       message: " Trajet fetched successfully!",
       Trajet: docs

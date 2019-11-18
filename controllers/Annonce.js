@@ -95,9 +95,9 @@ router.post('',  async function(req, res) {
 
 router.get('/', (req, res, next) => {
 
-  Annonce.find().sort({'sortedDate': -1}).then(docs => {
+  Annonce.find({sortedDate:{ $gte: new Date()}  }).sort({'sortedDate': -1}).then(docs => {
     res.status(200).json({
-      message: " Trajet fetched successfully!",
+      message: " Annonce fetched successfully!",
       Annonce: docs
     });
   });
@@ -160,11 +160,15 @@ let imageAnnnonce = req.body.imageAnnnonce;
 //get all Annonce by user id
 router.get("/allAnnonceUser/:idUser", (req, res, next) => {
     Annonce.find({idUser: req.params.idUser }).then(annonces => {
+
       res.status(200).json({
         message: "Annonces récupérés avec succès!!",
         Annonces: annonces
       });
-    });
+    }
+    
+    
+    );
   });
 
   // GET annonce By Id
